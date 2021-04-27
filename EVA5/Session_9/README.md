@@ -1,7 +1,8 @@
 **Albumentation File Code**
 
-#https://albumentations.ai/docs/api_reference/augmentations/transforms/
-#https://albumentations.ai/docs/api_reference/pytorch/transforms/
+References:
+https://albumentations.ai/docs/api_reference/augmentations/transforms/
+https://albumentations.ai/docs/api_reference/pytorch/transforms/
 
 #Normalize is set as ToTensor parameter - dict(mean, std)
 def AlbumentationTrainTransform(self):
@@ -44,5 +45,5 @@ def DisplayGradCamImages(model, model_type, layer, dataloader, classes, device, 
 
 **Framework Link:** https://github.com/paishowstopper/TSAI/new/main/EVA5/Session_9/framework
 
-**Final test accuracy:** 84% (Tested with multiple albumentations and different batch sizes but could not achieve the target accuracy (Spent over a day just training this code without success). Achieved 86% once but could not replicate it.)
+**Final test accuracy:** 84% (Tested with multiple albumentations, replaced the existing scheduler with StepLR and changed batch sizes but could not achieve the target accuracy. Spent over a day just training this code without success. Achieved 86% once but could not replicate it.)
 
