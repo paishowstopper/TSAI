@@ -14,6 +14,8 @@ Total parameters: 7752
 
 **File Link:** https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_5/EVA5_S5_1.ipynb
 
+
+
 **Step 2:**
 
 **Targets:** Test accuracy should be consistent (Should not drop well below best accuracy)
@@ -29,6 +31,8 @@ Total parameters: 7752
 **Analysis:** Changed the step size of the LR scheduler to 7 (Step sizes 6 and 8 were degrading the accuracy). The accuracy values were consistent now.
 
 **File Link:** https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_5/EVA5_S5_2.ipynb
+
+
 
 **Step 3:**
 
@@ -46,11 +50,13 @@ Total parameters: 7752
 
 **File Link:** https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_5/EVA5_S5_3.ipynb
 
+
+
 **Step 4:**
 
 **Targets:** Test accuracy should be above 99.4 consistently
 
-**Results: **
+**Results:**
 
 Best test accuracy: 99.49
 
