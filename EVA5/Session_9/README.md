@@ -1,5 +1,17 @@
 **Albumentation File Code**
 
+Albumentations Used:
+    **Standard**:
+        _HorizontalFlip
+        Normalize
+        ToTensor_
+    **Additional**:
+        _Rotate
+        RandomCrop
+        VerticalFlip_
+    **Additional (Commented out for the final run)**:
+        _Blur, ChannelShuffle, InvertImg, Cutout_
+
 References:
 https://albumentations.ai/docs/api_reference/augmentations/transforms/
 https://albumentations.ai/docs/api_reference/pytorch/transforms/
