@@ -22,19 +22,24 @@ class DataTransformation:
 
     #Normalize is set as ToTensor parameter - dict(mean, std)
     def AlbumentationTrainTransform(self):
-        atf = tc.Compose([ta.HorizontalFlip(),
+        tf = tc.Compose([ta.HorizontalFlip(p=0.5),
+                            ta.Rotate(limit=(-20, 20)),
+                            # ta.VerticalFlip(p=0.5),
+                            # ta.Cutout(num_holes=3, max_h_size=8, max_w_size=8, p=0.5),
                             # ta.Blur(),
                             # ta.ChannelShuffle(),
                             # ta.InvertImg(),
-                            # ta.Rotate(),
                             ta.RandomCrop(height=30, width=30, p=5.0),
-                            # ta.Cutout(1, 8, 8, [0.4914, 0.4822, 0.4465]),
-                            tp.ToTensor(dict(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)))
+                            ta.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+                            tp.ToTensor()
                             ])
-        return lambda img: atf(image = np.array(img))["image"]
+        return lambda img: tf(image = np.array(img))["image"]
 
     def AlbumentationTestTransform(self):
-        atf = tc.Compose([tp.ToTensor(dict(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)))])
-        return lambda img: atf(image = np.array(img))["image"]
+        tf = tc.Compose([ta.Normalize((0.485, 0.456, 0.406), (0.229, 0.224, 0.225)),
+                        tp.ToTensor()
+                        # tp.ToTensor(dict(mean=(0.4914, 0.4822, 0.4465), std=(0.247, 0.2435, 0.2616)))
+                        ])
+        return lambda img: tf(image = np.array(img))["image"]
         
         

@@ -1,3 +1,5 @@
+from tqdm import tqdm
+
 class Train():
     
     def __init__(self, dataloader, model, criterion, optimizer, scheduler, device, epochs):
@@ -14,7 +16,8 @@ class Train():
 
         for epoch in range(self.epochs):
             running_loss = 0.0
-            for i, (data, labels) in enumerate(self.dataloader, 0):
+            pbar = tqdm(self.dataloader, total=len(self.dataloader))
+            for i, (data, labels) in enumerate(pbar):
                 # get the inputs
                 inputs, labels = data.to(self.device), labels.to(self.device)
 
@@ -29,5 +32,5 @@ class Train():
 
                 # print statistics
                 running_loss += loss.item()
-            self.scheduler.step()
+            # self.scheduler.step()
             print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss))

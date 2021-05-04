@@ -5,26 +5,22 @@ from torch.utils.data import DataLoader
 
 class Loader():
     
-    def __init__(self, train_transform=None, test_transform=None, root='./data', batch_size=128, num_workers=2, train=True, download=True, shuffle=True):
+    def __init__(self, train_transform, test_transform, batch_size=128, num_workers=4):
 
-        self.root = root
         self.batch_size = batch_size
         self.num_workers = num_workers
-        self.train = train
-        self.download = download
-        self.shuffle = shuffle
-        self.train_transform = test_transform
+        self.train_transform = train_transform
         self.test_transform = test_transform
 
     def CIFAR10Load(self):
 
-        self.dataloader_args = dict(batch_size=self.batch_size, num_workers=self.num_workers)
+        self.dataloader_args = dict(batch_size=self.batch_size, num_workers=self.num_workers, pin_memory=True)
         self.classes = ('plane', 'car', 'bird', 'cat', 'deer', 'dog', 'frog', 'horse', 'ship', 'truck')
         
-        self.training_set = datasets.CIFAR10(root=self.root, train=self.train, download=self.download, transform=self.test_transform)
-        self.trainloader = DataLoader(self.training_set, shuffle=self.shuffle, **self.dataloader_args)
+        self.training_set = datasets.CIFAR10(root='./data', train=True, download=True, transform=self.train_transform)
+        self.trainloader = DataLoader(self.training_set, shuffle=True, **self.dataloader_args)
         
-        self.test_set = datasets.CIFAR10(root=self.root, train=(not self.train), download=self.download, transform=self.test_transform)
-        self.testloader = DataLoader(self.test_set, shuffle=(not self.shuffle), **self.dataloader_args)
+        self.test_set = datasets.CIFAR10(root='./data', train=False, download=True, transform=self.test_transform)
+        self.testloader = DataLoader(self.test_set, shuffle=True, **self.dataloader_args)
         
         return self.trainloader, self.testloader, self.classes
