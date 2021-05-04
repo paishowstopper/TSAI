@@ -2,21 +2,21 @@
 
 Albumentations Used:
 
-    **Standard**:
+    Standard:
     
-        _HorizontalFlip
+        HorizontalFlip
         Normalize
-        ToTensor_
+        ToTensor
         
-    **Additional**:
+    Additional:
     
-        _Rotate
+        Rotate
         RandomCrop
-        VerticalFlip_
+        VerticalFlip
         
-    **Additional (Commented out for the final run)**:
+    Additional (Commented out for the final run):
     
-        _Blur, ChannelShuffle, InvertImg, Cutout_
+        Blur, ChannelShuffle, InvertImg, Cutout
 
 References:
 https://albumentations.ai/docs/api_reference/augmentations/transforms/
