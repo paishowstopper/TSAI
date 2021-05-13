@@ -1,7 +1,11 @@
 Paste the code in QuizDNN.py - https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_9_Quiz/framework/QuizDNN.py
+
 Paste the code of your Colab (or computer's) Notebook - https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_9_Quiz/Session_9_Quiz.ipynb
+
 Paste the link to your Google Colab Notebook file (or you GitHub Repo) - https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session_9_Quiz
+
 Paste the complete training log:
+
 
 100%|██████████| 391/391 [00:10<00:00, 35.59it/s]
   0%|          | 0/391 [00:00<?, ?it/s]
