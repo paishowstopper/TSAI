@@ -1,10 +1,7 @@
 1. Upload the Validation Accuracy Change Graph (all 5 models combined) - 100 pts
-
-![image](https://user-images.githubusercontent.com/26896746/118090455-38ff3a00-b3e7-11eb-826f-10559247cb0e.png)
-
 2. Upload the Loss Change Graph (all 5 models combined) - 100 pts
 
-![image](https://user-images.githubusercontent.com/26896746/118090524-4ddbcd80-b3e7-11eb-8a1d-44c4ff67125a.png)
+![image](https://user-images.githubusercontent.com/26896746/118090455-38ff3a00-b3e7-11eb-826f-10559247cb0e.png)
 
 3. Upload the image showing 25 misclassified images for the "with GBN" model. - 250 pts
 
