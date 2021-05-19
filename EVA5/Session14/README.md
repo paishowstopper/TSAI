@@ -9,8 +9,6 @@ Common settings include construction areas/construction workers, military person
 Not all classes are present in an image. Also one image may have many repitions of the same class.
 For example, a group of construction workers without helmets, but with vests and boots.
 
-The dataset is available under: https://drive.google.com/drive/u/1/folders/1nD1cdLk5y-rpmtiXH-JeU5vLvLLYVVyp
-
 Explanation:
 There are four folders provided:
 
