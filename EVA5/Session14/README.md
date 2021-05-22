@@ -20,10 +20,12 @@ Each image contains 1/more annotated regions. An annotated region has 4 paramete
 
 4. Surface plane images were created by running planercnn repo (https://github.com/NVlabs/planercnn). These are plane detection images (again, .png files with the same name as .jpg files).
 
+
+## Session 14 assignment output
+
 Uploaded **4** output images here (actual output files are very large)
 
 1. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/MiDaS/output_images
-
 2. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/planercnn/output_images
 
 1. MiDaS full output (screenshot)
