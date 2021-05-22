@@ -10,4 +10,8 @@
 1. Github link: https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_13/Session_13_YoloV3.ipynb
 2. YouTube video link: https://www.youtube.com/watch?v=oqLkTUbsRNA
 
-Output screenshots attached (since the original output file is very large)
+4 output images placed in **output_images** folder (since the original output file is very large) - https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session_13/output_images
+
+Screenshot below shows the zipped output file:
+
+![image](https://user-images.githubusercontent.com/26896746/119215002-6a16f300-bae8-11eb-887f-87ff3924b258.png)
