@@ -3,8 +3,11 @@
 The dataset has ~3600 images. These images are of construction workers (mostly from work site). We are focusing on 4 main classes within these images:
 
 hardhat (0)
+
 vest (1)
+
 mask (2)
+
 boots (3)
 
 Note: An image need not have all 4 classes but will have at least one for sure. AN image might have a class more than once.
@@ -29,10 +32,10 @@ Uploaded **4** output images here (actual output files are very large)
 2. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/planercnn/output_images
 
 
-1. MiDaS full output (screenshot)
+MiDaS full output (screenshot)
 
 ![image](https://user-images.githubusercontent.com/26896746/119217284-d13ba400-baf6-11eb-90f4-4af5374a7039.png)
 
-2. Planercnn full output (screenshot)
+Planercnn full output (screenshot)
 
 ![image](https://user-images.githubusercontent.com/26896746/119217314-0647f680-baf7-11eb-8d1e-06c1e8b5ce08.png)
