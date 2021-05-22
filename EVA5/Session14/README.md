@@ -28,6 +28,7 @@ Uploaded **4** output images here (actual output files are very large)
 1. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/MiDaS/output_images
 2. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/planercnn/output_images
 
+
 1. MiDaS full output (screenshot)
 
 ![image](https://user-images.githubusercontent.com/26896746/119217284-d13ba400-baf6-11eb-90f4-4af5374a7039.png)
