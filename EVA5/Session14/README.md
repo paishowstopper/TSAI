@@ -1,60 +1,35 @@
-Dataset:
-This dataset consists of around 3500 images containing four main classes:
+## Dataset description
 
-Hard hats
-Vests
-Masks
-Boots
-Common settings include construction areas/construction workers, military personnel, traffic policemen etc.
-Not all classes are present in an image. Also one image may have many repitions of the same class.
-For example, a group of construction workers without helmets, but with vests and boots.
+The dataset has ~3600 images. These images are of construction workers (mostly from work site). We are focusing on 4 main classes within these images:
 
-Explanation:
-There are four folders provided:
+hardhat (0)
+vest (1)
+mask (2)
+boots (3)
 
-images
-labels
-depth
-planes
-1. Raw images
-The raw images are present under the images folder. The images were collected by crowdsourcing and do not follow any particular naming convention.
-They are also of varied sizes. There are 3591 images.
-These are mostly .jpg files (< 0.5% might be otherwise)
+Note: An image need not have all 4 classes but will have at least one for sure. AN image might have a class more than once.
+
+1. Input images are in **images** folder. These are collected from all the batch students who individually contributed between 50-200 images (at least 50 images of each class). Almost all of them are .jpg/.jpeg files.
 
 2. Bounding Boxes
-A Yolo compatible annotation tool was used to annotate the classes within these images.
-These are present under the labels folder as text files. However please note that not all raw images have a corresponding label. There are 3527 labelled text files. A few things to note:
+Bounding boxes are created using annotation tool from here: https://github.com/miki998/YoloV3_Annotation_Tool
 
-Each image can contain 0 or more annotated regions.
-Each annotated region is defined by four main parameters: x, y, width, height
-For the rectangular region, (x, y) coordinates refers to top left corner of the bounding box
-width and height refer to the width and height of the bounding region. The centroid of the bounding box can be calculated from this if required.
-A label file corresponding to an image is a space separated set of numbers. Each line corresponds to one annotated region in the image.
-The first column maps to the class of the annotated region (order of the classes is as described above). The other four numbers represent the bounding boxes (ie annotated region), and stand for the x, y, width and height parameters explained earlier. These four numbers should be between 0 and 1.
-3. Depth images
-Depth images were created using this repo:
-https://github.com/intel-isl/MiDaS
-There are 3588 depth images, they are present under the 'depth' folder, and are greyscale images
-These are .png files, make sure to handle accordingly since the raw images are .jpg
-The names are same as that of the corresponding raw images.
+Each image contains 1/more annotated regions. An annotated region has 4 parameters: x, y, width, height. (x, y) is the coordinate of the top left corner of the bounding box of width and height. This data is present in a text file (same name as image). The text file has the same number of lines as the number of annotations in the image. First column of each line represents the class it represents. The next 4 are x, y, width and height. Similarly, every image has a corresponding text file with the bounding box information. All these text files are under the **labels** folder.
 
-4. Planar images
-Planes were created using this repo:
-https://github.com/NVlabs/planercnn
-These are .png files, make sure to handle accordingly since the raw images are .jpg
-There are 3545 planar images. The names are same as that of the corresponding raw images.
+3. Depth images were created by running the MiDaS repository (https://github.com/intel-isl/MiDaS). These are grayscale images which contains information relating to the distance of the surfaces of scene objects from a viewpoint. These are .png files (with the same name as the .jpg files) available under **depth** folder.
 
-Note:
-This dataset needs to be cleaned up further.
+4. Surface plane images were created by running planercnn repo (https://github.com/NVlabs/planercnn). These are plane detection images (again, .png files with the same name as .jpg files).
 
-There are a few (<0.5%) png files among the raw images, which need to be removed (These do not have labels ie bounding boxes, nor do they have planar images).
-There are a few (<0.5%) label files which are of invalid syntax (the x,y coordinates, or the width/height are > 1). These need to be discarded.
-Final cleaned up dataset should only include data where all these three files are present for a raw image: labels text file, depth image and planar image
+Uploaded **4** output images here (actual output files are very large)
 
-Uploaded 4 output images in the (actual output files are very large)
+1. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/MiDaS/output_images
 
-1. MiDaS output (screenshot)
+2. https://github.com/paishowstopper/TSAI/tree/main/EVA5/Session14/planercnn/output_images
+
+1. MiDaS full output (screenshot)
+
 ![image](https://user-images.githubusercontent.com/26896746/119217284-d13ba400-baf6-11eb-90f4-4af5374a7039.png)
 
-2. Planercnn output (screenshot)
+2. Planercnn full output (screenshot)
+
 ![image](https://user-images.githubusercontent.com/26896746/119217314-0647f680-baf7-11eb-8d1e-06c1e8b5ce08.png)
