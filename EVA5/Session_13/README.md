@@ -9,3 +9,5 @@
 
 1. Github link: https://github.com/paishowstopper/TSAI/blob/main/EVA5/Session_13/Session_13_YoloV3.ipynb
 2. YouTube video link: https://www.youtube.com/watch?v=oqLkTUbsRNA
+
+Output screenshots attached (since the original output file is very large)
