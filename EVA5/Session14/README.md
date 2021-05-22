@@ -50,3 +50,11 @@ This dataset needs to be cleaned up further.
 There are a few (<0.5%) png files among the raw images, which need to be removed (These do not have labels ie bounding boxes, nor do they have planar images).
 There are a few (<0.5%) label files which are of invalid syntax (the x,y coordinates, or the width/height are > 1). These need to be discarded.
 Final cleaned up dataset should only include data where all these three files are present for a raw image: labels text file, depth image and planar image
+
+Uploaded 4 output images in the (actual output files are very large)
+
+1. MiDaS output (screenshot)
+![image](https://user-images.githubusercontent.com/26896746/119217284-d13ba400-baf6-11eb-90f4-4af5374a7039.png)
+
+2. Planercnn output (screenshot)
+![image](https://user-images.githubusercontent.com/26896746/119217314-0647f680-baf7-11eb-8d1e-06c1e8b5ce08.png)
