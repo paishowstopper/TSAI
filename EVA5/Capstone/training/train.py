@@ -76,7 +76,7 @@ if hyp['fl_gamma']:
     print('Using FocalLoss(gamma=%g)' % hyp['fl_gamma'])
 
 def train(plane_args, yolo_args, midas_args, 
-            add_plane_loss, add_yolo_loss, add_midas_loss,
+            plane_weightage, yolo_weightage, midas_weightage,
             resume_train=False, model_path=''):
 
     options = plane_args
@@ -146,18 +146,14 @@ def train(plane_args, yolo_args, midas_args,
     best_loss = 1000
 
     if resume_train:
-
         last_model = torch.load(model_path + 'model_last.pt', map_location=device)
         model.load_state_dict(last_model['state_dict'])
         optimizer.load_state_dict(last_model['optimizer'])
         best_loss = last_model['best_loss']
         start_epoch = last_model['epoch'] + 1
         del last_model
-
     else:
-        
         attempt_download(weights)
-
         if weights.endswith('.pt'):  # pytorch format
             # possible weights are '*.pt', 'yolov3-spp.pt', 'yolov3-tiny.pt' etc.
             chkpt = torch.load(weights, map_location=device)
@@ -227,12 +223,6 @@ def train(plane_args, yolo_args, midas_args,
     # Dataset
     train_dataset = create_data(yolo_params, planercnn_params, midas_params)
 
-    yolo_params_test = dict(path = test_path, img_size = imgsz_test, batch_size = batch_size, 
-                            augment=False, hyp=hyp, rect=opt.rect, cache_images=opt.cache_images,
-                            single_cls=opt.single_cls)
-
-    test_dataset = create_data(yolo_params_test, planercnn_params, midas_params)
-
     # Dataloader
     batch_size = min(batch_size, len(train_dataset))
     nw = min([os.cpu_count(), batch_size if batch_size > 1 else 0, 8])  # number of workers
@@ -242,13 +232,6 @@ def train(plane_args, yolo_args, midas_args,
                             shuffle=not opt.rect,  # Shuffle=True unless rectangular training is used
                             pin_memory=True,
                             collate_fn=train_dataset.collate_fn)
-
-    # Testloader
-    testloader = DataLoader(test_dataset,
-                            batch_size=batch_size,
-                            num_workers=nw,
-                            pin_memory=True,
-                            collate_fn=test_dataset.collate_fn)
 
     # Model parameters
     model.nc = nc  # attach number of classes to model
@@ -275,14 +258,14 @@ def train(plane_args, yolo_args, midas_args,
     for epoch in range(start_epoch, start_epoch+epochs):
         
         model.train()
-        print(('\n' + '%10s' * 6) % ('Epoch', 'MiDaS_loss', 'Yolo_loss', 'PlaneRCNN_loss', 'All_loss', 'img_size'))
+        print(('\n' + '%10s' * 6) % ('Epoch', 'Dp_loss', 'bbx_loss', 'pln_loss', 'All_loss', 'img_size'))
         pbar = tqdm(enumerate(trainloader))
         mloss = torch.zeros(4).to(device)  # mean losses
 
-        for i,(plane_data,yolo_data,depth_data) in pbar:
+        for i, (plane_data, yolo_data, depth_data) in pbar:
 
             optimizer.zero_grad()
-            imgs, targets, paths, _ = yolo_data
+            imgs, targets, _, _ = yolo_data
 
             ni = i + nb * epoch  # number integrated batches (since train start)
             imgs = imgs.to(device).float() / 255.0  # uint8 to float32, 0 - 255 to 0.0 - 1.0
@@ -309,14 +292,14 @@ def train(plane_args, yolo_args, midas_args,
                     ns = [math.ceil(x * sf / gs) * gs for x in imgs.shape[2:]]  # new shape (stretched to 32-multiple)
                     imgs = F.interpolate(imgs, size=ns, mode='bilinear', align_corners=False)
 
-            yolo_inp = imgs
+            yolo_ip = imgs
 
-            dp_img_size,depth_img,depth_target = depth_data #######
-            dp_sample = torch.from_numpy(depth_img).to(device).unsqueeze(0) ######
+            depth_img_size, depth_img, depth_target = depth_data #######
+            depth_sample = torch.from_numpy(depth_img).to(device).unsqueeze(0) ######
 
-            midas_inp = dp_sample ####
+            midas_ip = depth_sample ####
 
-            data_pair,plane_img,plane_np = plane_data
+            data_pair, plane_img, plane_np = plane_data
             sample = data_pair
 
             plane_losses = []            
@@ -333,14 +316,14 @@ def train(plane_args, yolo_args, midas_args,
             masks = (gt_segmentation == torch.arange(gt_segmentation.max() + 1).cuda().view(-1, 1, 1)).float()
             input_pair.append({'image': images, 'depth': gt_depth, 'bbox': gt_boxes, 'extrinsics': extrinsics, 'segmentation': gt_segmentation, 'camera': camera, 'plane': planes[0], 'masks': masks, 'mask': gt_masks})
             
-            plane_inp = dict(input = [images, image_metas, gt_class_ids, gt_boxes, gt_masks, gt_parameters, camera], mode='inference_detection', use_nms=2, use_refinement=True, return_feature_map=False)
+            plane_ip = dict(input = [images, image_metas, gt_class_ids, gt_boxes, gt_masks, gt_parameters, camera], mode='inference_detection', use_nms=2, use_refinement=True, return_feature_map=False)
 
-            yolo_out, midas_out, plane_out = model.forward(yolo_inp, midas_inp, plane_inp)
+            yolo_op, midas_op, plane_op = model.forward(yolo_ip, midas_ip, plane_ip)
 
-            pred = yolo_out
-            dp_prediction = midas_out           
+            pred = yolo_op
+            depth_prediction = midas_op           
 
-            rpn_class_logits, rpn_pred_bbox, target_class_ids, mrcnn_class_logits, target_deltas, mrcnn_bbox, target_mask, mrcnn_mask, target_parameters, mrcnn_parameters, detections, detection_masks, detection_gt_parameters, detection_gt_masks, rpn_rois, roi_features, roi_indices, depth_np_pred = plane_out
+            rpn_class_logits, rpn_pred_bbox, target_class_ids, mrcnn_class_logits, target_deltas, mrcnn_bbox, target_mask, mrcnn_mask, target_parameters, mrcnn_parameters, detections, detection_masks, detection_gt_parameters, detection_gt_masks, rpn_rois, roi_features, roi_indices, depth_np_pred = plane_op
             rpn_class_loss, rpn_bbox_loss, mrcnn_class_loss, mrcnn_bbox_loss, mrcnn_mask_loss, mrcnn_parameter_loss = compute_losses(config, rpn_match, rpn_bbox, rpn_class_logits, rpn_pred_bbox, target_class_ids, mrcnn_class_logits, target_deltas, mrcnn_bbox, target_mask, mrcnn_mask, target_parameters, mrcnn_parameters)
 
             plane_losses =[rpn_class_loss + rpn_bbox_loss + mrcnn_class_loss + mrcnn_bbox_loss + mrcnn_mask_loss + mrcnn_parameter_loss]
@@ -413,27 +396,27 @@ def train(plane_args, yolo_args, midas_args,
             
             plane_loss = sum(plane_losses) + pln_ssim
             plane_losses = [l.data.item() for l in plane_losses] #train_planercnn.py 331
-            dp_prediction = (torch.nn.functional.interpolate(
-                            dp_prediction.unsqueeze(1),
-                            size=tuple(dp_img_size[:2]),
+            depth_prediction = (torch.nn.functional.interpolate(
+                            depth_prediction.unsqueeze(1),
+                            size=tuple(depth_img_size[:2]),
                             mode="bicubic",
                             align_corners=False))
             bits=2
 
-            depth_min = dp_prediction.min()
-            depth_max = dp_prediction.max()
+            depth_min = depth_prediction.min()
+            depth_max = depth_prediction.max()
 
             max_val = (2**(8*bits))-1
 
             if depth_max - depth_min > np.finfo("float").eps:
-                depth_out = max_val * (dp_prediction - depth_min) / (depth_max - depth_min)
+                depth_out = max_val * (depth_prediction - depth_min) / (depth_max - depth_min)
             else:
                 depth_out = 0
             
             depth_target = torch.from_numpy(np.asarray(depth_target)).to(device).type(torch.cuda.FloatTensor).unsqueeze(0)
             depth_target = (torch.nn.functional.interpolate(
                                 depth_target.unsqueeze(1),
-                                size=dp_img_size[:2],
+                                size=depth_img_size[:2],
                                 mode="bicubic",
                                 align_corners=False
                             ))
@@ -452,7 +435,7 @@ def train(plane_args, yolo_args, midas_args,
                 print('WARNING: non-finite yolo_loss, ending training ', yolo_loss_items)
                 return results
 
-            total_loss = (add_plane_loss * plane_loss) + (add_yolo_loss * yolo_loss) + (add_midas_loss * depth_loss)
+            total_loss = (plane_weightage * plane_loss) + (yolo_weightage * yolo_loss) + (midas_weightage * depth_loss)
 
             # Compute gradient
             if mixed_precision:
