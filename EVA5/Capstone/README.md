@@ -32,6 +32,7 @@ We have 3 decoders:
 Architecture diagram
 ====================
 
+![Architecture diagram](https://user-images.githubusercontent.com/26896746/119260993-e695f880-bbf2-11eb-870f-8e983beb784b.jpg)
 
 Loss functions
 ==============
