@@ -10,7 +10,7 @@ This project is to to create a network that can perform 3 tasks simultaneously:
 Data preparation
 ================
 
-Input images were collected from all the batch students who individually contributed between 50-200 images (at least 50 images of each class). Almost all of them are .jpg/.jpeg files. Bounding Boxes Bounding boxes are created using annotation tool from here: https://github.com/miki998/YoloV3_Annotation_Tool. Total images collected were 3591. Another 144 images were individually collected and annotated using the tool. In addition, high quality images were captured from a short video of construction workers dancing and occupied the frame during the entire duration. All the necessary data was initially loaded to google drive and then downloaded from there.
+Input images were collected from all the batch students who individually contributed between 50-200 images (at least 50 images of each class). Almost all of them are .jpg/.jpeg files. Bounding Boxes Bounding boxes are created using annotation tool from here: https://github.com/miki998/YoloV3_Annotation_Tool. Total images collected were 3591. Another 144 images were individually collected and annotated using the tool. In addition, high quality images were captured from a short video of construction workers dancing and occupied the frame during the entire duration (for midas and planercnn). All the necessary data was initially loaded to google drive and then downloaded from there.
 
 Model
 =====
@@ -29,8 +29,8 @@ We have 3 decoders:
 
 **Note:** Since nms and roi of planercnn integration (from Session 14) were using pytorch 0.4, it had to be replaced with torchvision nms and roi from https://github.com/longcw/RoIAlign.pytorch to be compatible with others.
 
-Architecture
-============
+Architecture diagram
+====================
 
 
 Loss functions
@@ -59,3 +59,22 @@ Best model was used for evaluation to generate the final output. Sample output s
 
 Additional points
 =================
+
+1. Replaced upsampling with interpolation (which is essentially upsampling followed by filtering).
+2. Initially trained with smaller image sizes and was able to move to 512x512 (training results uploaded from these runs only).
+3. Achieved slight relief in epoch training time by scaling all images to 512.
+4. Depth prediction from planercnn was not taken (because we are using midas)
+
+Notes
+=====
+
+1. The output is not of the best quality. When it comes to Yolo detection, the hardhat and vest detection was good but boots and mask detection is poor (This is probably because the number of annotations for hardhats and vests are relatively higher than the other 2). Surface plane and depth detection is also average. 
+2. To escape from regular CUDA out of memory errors, code was added to forcefully garbage collect after each iteration and CUDA cache clearing after every epoch.
+3. Running out of google colab daily limit. Used multiple google accounts to overcome this is but wish there was a more elegant way!
+4. Since I'm completely new to this field, took help in generous doses from batchmates and friends without whom couldn't have reached this stage too.
+
+TODO
+====
+
+1. Try out various augmentation techniques (something I could hardly do for this project).
+2. Quality training but not sure how to because of the colab daily limit. Focusing on where the model is performing poorly and correcting them one by one would have given higher quality output!
