@@ -1,14 +1,34 @@
-model.py
-========
+**Part 1**
 
-This file has code block 7 from the original file which is the Neural network model class.
+_**Backpropagation screenshot**_
 
-utils.py
-========
+![BackPropagation](https://github.com/paishowstopper/TSAI/assets/26896746/8352b8d8-e496-405b-ad4b-37bbaae7e63b)
 
-This file has the code blocks 8, 9 and 11. Code block 8 has the variables to capture the training and testing losses and accuracies. Code block 9 has the training and testing functions. Code block 11 is used to plot the training and test accuracies and losses graphically. 
+_**Loss graphs for learning rates 0.1 to 2**_
 
-S5.ipynb
-========
+_**0.1**_
 
-This file has the code to run the netwrok. Block 1 has all the necessary imports. Block 2 sets the device to GPU (CUDA) if available, else sets it to CPU. Code block 3 declares and initializes the train and test transforms. Train transforms has a few augmentation techniques applied to it (for improved training) apart from setting mean and standard values and transforming to tensor (common to test transform also). MNIST train and test data is loaded to train and test loaders respectively with respective transforms applied. Shuffle is set to true for ensuring that the network does not learn to by heart. Batch size is set to 512. Learning rate is set to 0.01. Model is trained for 20 epochs (result is displayed graphically). Model summary is displayed at the end.
+![LR_0 1](https://github.com/paishowstopper/TSAI/assets/26896746/57bb6f53-4cba-4fbb-8cbd-2306f7d8d94c)
+
+_**0.2**_
+
+![LR_0 2](https://github.com/paishowstopper/TSAI/assets/26896746/f5c21806-e0ce-4631-98cb-042b5f61b3af)
+
+_**0.5**_
+
+![LR_0 5](https://github.com/paishowstopper/TSAI/assets/26896746/6d481b18-8c0a-4779-84a7-1d11a365e973)
+
+_**0.8**_
+
+![LR_0 8](https://github.com/paishowstopper/TSAI/assets/26896746/8a0f83db-6dfa-4f9d-847e-711f474560a3)
+
+_**1.0**_
+
+![LR_1](https://github.com/paishowstopper/TSAI/assets/26896746/40e0395b-92c4-462b-bc0e-52f0c8b5aee2)
+
+_**2.0**_
+
+![LR_2](https://github.com/paishowstopper/TSAI/assets/26896746/59ee5208-609f-4747-b26e-fc853f1cfbf2)
+
+
+**Part 2**
