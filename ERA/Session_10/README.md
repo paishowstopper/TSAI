@@ -2,43 +2,11 @@
 
 This folder contains an implementation of a Custom ResNet model
 
-## Folder Structure
-```
-└── README.md
-└── src/
-    └── data_setup.py
-    └── utils.py
-    └── engine.py
-    └── custom_resnet.py
-└── results/
-    └── CustomResNet.pth
-    └── incorrect_images.png
-    └── loss_accuracy_plot.png
-    └── lr_finder_plot.png
-└── train.py
-└── S9.ipynb
-```
-
 ## How to Run the code
 Clone the repo and run
-Change your current directory to S9
 ```
 python train.py
 ```
-
-## OneCycle LR
-
-```
-from torch_lr_finder import LRFinder
-
-lr_finder = LRFinder(model, optimizer, criterion, device="cuda")
-lr_finder.range_test(train_loader, end_lr=10, num_iter=200, step_mode="exp")
-lr_finder.plot() # to inspect the loss-learning rate graph
-lr_finder.reset() # to reset the model and optimizer to their initial state
-```
-
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/40bbedb3-33ed-491b-a0d4-0015d115590f)
-
 ## Model Summary
 
 ```
@@ -88,17 +56,12 @@ Estimated Total Size (MB): 31.53
 
 ## Incorrect Classified Images
 
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/519d7bbb-b96f-4a9d-a9c6-6d1e2103fc3c)
-
+![incorrect_images](https://github.com/paishowstopper/TSAI/assets/26896746/c7c2e337-ba89-4344-abf3-8480d5765bb3)
 
 ## Loss Accuracy Plot
 
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/ebdff881-ebaf-40bd-bb1c-edcaa22c2431)
-
-
+![loss_accuracy_plot](https://github.com/paishowstopper/TSAI/assets/26896746/5113d2be-5899-4c86-ab56-f733311ef2be)
 
 ## Key Achievements
-* 92.53% Training Accuracy within 24 epochs using OneCycle LR
-* Implemented Model with Residual Connections
-* Used Image Augmentations to remove overfitting
+* 93.09% Test Accuracy
 
