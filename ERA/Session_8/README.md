@@ -25,41 +25,27 @@ CIFAR10
 
 # Batch Normalization
 ### Results:
-* Best Train Accuracy: 74.04
-* Best Test Accuracy: 71.58
+* Best Train Accuracy: 74.2
+* Best Test Accuracy: 70.51
 
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/b44ecd71-ed23-46b3-b52c-8771e0e736c7)
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/4dd8c70a-4fcd-4ed5-968d-f95ce604291d)
 
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/36eb6125-4d02-45d7-9ddc-a32ab69d6176)
 
 # Layer Normalization
 ### Results:
-* Best Train Accuracy: 72.67
-* Best Test Accuracy: 70.68
+* Best Train Accuracy: 74.87
+* Best Test Accuracy: 72.83
 
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/ab13bedc-9fc9-4de4-b68e-2f6bbad012f6)
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/c8095afb-99ea-475e-b31b-4c47b11032b6)
 
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/8333ccc7-2810-434b-8721-8530ef65d687)
 
 # Group Normalization
 ### Results:
-* Best Train Accuracy: 73.57
-* Best Test Accuracy: 70.56
+* Best Train Accuracy: 74.5
+* Best Test Accuracy: 71.03
 
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/95a9b5ab-2f71-45f2-a071-00d05c312561)
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/52134a8b-d035-49ce-8f8b-1013647f8c99)
 
-
-
-## Misclassified Images
-
-![image](https://github.com/selvaraj-sembulingam/ERA-V1/assets/66372829/ad9591d4-a86d-4ce0-8231-0d482dd33415)
-
-## Findings
-
-* Batch normalization seems to perform better than layer and group normalization.
-* This is because batch normalization addresses the Internal Covariate Shift.
-* Batch normalization introduces slight regularization effects.
-* While the layer normalization does not consider the batch dimension and normalizes across the entire layer.
-* For CNNs, where spatial and channel information is important, layer normalization may not capture the statistical variations effectively, which can lead to suboptimal performance when dealing with larger batch sizes.
-* Also, Group normalization normalizes within groups of channels but does not consider the spatial dimensions.
-* Hence Batch Normalization outperforms Layer and Group Normalization in CNNs.
-
-* Note: A slight overfitting is still there in the model. This needs to be addressed with techniques like Image Augmentation etc
+![image](https://github.com/paishowstopper/TSAI/assets/26896746/ceaaf975-6fa8-454a-a88d-8bc42a2149db)
